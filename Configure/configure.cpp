@@ -3,13 +3,11 @@
 configure::configure()
 {
 	memset(filename,'\0',sizeof(filename));
-	std::cout << "Default constructor " << std::endl;
 }
 	
 configure::configure(char* file)
 {
 	memset(filename,'\0',sizeof(filename));
-	std::cout <<"Parametarized constructor " << std::endl;
 	strcpy(filename,file);
 }
 
@@ -143,10 +141,12 @@ bool configure::checkfile()
 		}
 	}
 	
+	infile.close();
+	
 	return SUCCESS;
 }
 
 configure::~configure()
 {
-	std::cout << "Destructor called " << std::endl;
+	
 }

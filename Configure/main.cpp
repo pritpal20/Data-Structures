@@ -30,7 +30,7 @@ int main(int argc,char* argv[])
 	}
 	
 	objcfg.readiniFile();
-	cout <<"Pritpal name is " <<objcfg.getFieldValue("Pritpal","Name") << "\n";
+	cout <<"Logfile name is " <<objcfg.getFieldValue("LOGGER","logfile") << "\n";
 	
 	return 0;
 }
