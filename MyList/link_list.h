@@ -366,7 +366,4 @@ void LinkList<T>::Remove(int pos)
 	RemoveNode(it.current);
 }
 
-
-
-
 #endif 
