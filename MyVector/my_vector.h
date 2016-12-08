@@ -31,7 +31,7 @@ class vector
 	vector();
 	vector(size_type,const T&);
 	vector(const vector&);
-	vector(std::initializer_list<T>);
+	//vector(std::initializer_list<T>);
 	vector<T>& operator=(const vector&);
 
 	size_type size() const { return vec_sz ;} 
@@ -100,14 +100,14 @@ vector<T>::vector(const vector &obj)
 		arr[i] = obj.arr[i];
 }
 
-template <typename T>
-vector<T>::vector(std::initializer_list<T> lst) 
-{
-	rsrv_sz = lst.size() << 2;
-	arr = new T[rsrv_sz];
-	for (auto &item: lst)
-		arr[vec_sz++] = item;
-}
+//template <typename T>
+// vector<T>::vector(std::initializer_list<T> lst) 
+// {
+	// rsrv_sz = lst.size() << 2;
+	// arr = new T[rsrv_sz];
+	// for (auto &item: lst)
+		// arr[vec_sz++] = item;
+// }
 
 
 // Overloaded assignment operator : 
