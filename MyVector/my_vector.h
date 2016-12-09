@@ -62,19 +62,6 @@ vector<T>::vector()
 
 }
 
-//Constructor : type vector v(size);
-// template <typename T>
-// vector<T>::vector(size_type n)
-// {
-	// capacity = n << 1 ;
-	// length = 0;
-	// arr = new T[capacity];
-	// for(int i = 0; i < n ; i++)
-		// arr[i] = T();
-	// vec_sz = n;
-// }
-
-// Constructor : type vector v(size,initial value)
 template <typename T>
 vector<T>::vector(size_type n,const T &value = T())
 {
@@ -100,32 +87,28 @@ vector<T>::vector(const vector &obj)
 		arr[i] = obj.arr[i];
 }
 
-//template <typename T>
-// vector<T>::vector(std::initializer_list<T> lst) 
-// {
-	// rsrv_sz = lst.size() << 2;
-	// arr = new T[rsrv_sz];
-	// for (auto &item: lst)
-		// arr[vec_sz++] = item;
-// }
-
-
 // Overloaded assignment operator : 
 template <typename T>
-vector<T>& vector<T>::operator=(const vector& obj)
+vector<T>& vector<T>::operator=(const vector& rhs)
 {
-	if(capacity < obj.vec_sz)
+	if(this == &rhs)
 	{
-		capacity = obj.vec_sz << 1 ;
+		cout << "self referencing doin nothng \n" ;
+		return *this;		
+	}
+	
+	if(capacity < rhs.vec_sz)
+	{
+		capacity = rhs.vec_sz << 1 ;
 		reallocate();
 	}
 	
-	for(int i = 0 ; i <= obj.vec_sz ; i++)
-		arr[i] = obj.arr[i];
-	vec_sz = obj.vec_sz;
+	for(int i = 0 ; i <= rhs.vec_sz ; i++)
+		arr[i] = rhs.arr[i];
+	vec_sz = rhs.vec_sz;
 	
-	// size = obj.size;
-	// return *this;
+	return *this;
+	
 }
 template <typename T>
 void vector<T>::push_back(T element)
