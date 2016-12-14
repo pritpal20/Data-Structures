@@ -19,35 +19,52 @@ class vector
 	typedef T value_type;
 	typedef unsigned int size_type;
 	typedef T & reference;
+	typedef const T & const_reference;
+	typedef T* pointer;
+	typedef const T *  const_pointer;
 	
 	class iterator
 	{
 		T *current ;
+		
 		public : 
 		iterator():current(NULL)
 		{
 		}
-	};	
+		iterator(T* a_current):current(a_current)
+		{
+		}
+		
+		iterator operator++();
+		iterator operator++(int);
+		bool operator !=(const iterator rhs);
+		bool operator ==(const iterator rhs);
+		T operator*() const;
+	};
+	
 	vector();
-	vector(size_type,const T&);
+	explicit vector(size_type,const T&);
 	vector(const vector&);
-	//vector(std::initializer_list<T>);
-	vector<T>& operator=(const vector&);
 
 	size_type size() const { return vec_sz ;} 
-	size_type Capacity() const {return capacity;}
+	size_type capacity() const {return rsrv_sz;}
 	
 	void push_back(T element);
-	reference operator[](typename vector<T>::size_type) const;
+	
+	vector<T>& operator=(const vector&);
+	const_reference operator[](typename vector<T>::size_type) const;
 	reference operator[](typename vector<T>::size_type);
 	
 	inline void reallocate();
 	
+	iterator begin() const;
+	iterator end() const;
+	iterator insert(iterator it,const T &value);
+	
 	private :
 	
 	size_type vec_sz ;
-	size_type capacity;
-    size_type length;	
+	size_type rsrv_sz;
 	T *arr;
 
 };
@@ -55,20 +72,21 @@ class vector
 template <typename T>
 vector<T>::vector()
 {
-	capacity = 4;
-	length = 0;
+	puts("Inside ... 1 ");
+	rsrv_sz = 4;
 	vec_sz = 0;
-	arr = new T[capacity];
+	arr = new T[rsrv_sz];
 
 }
 
 template <typename T>
 vector<T>::vector(size_type n,const T &value = T())
 {
-	capacity = n << 1 ;
+	puts("Inside ... 2 ");
 	vec_sz = n;
+	rsrv_sz = vec_sz << 2 ;
 	
-	arr = new T[vec_sz];
+	arr = new T[rsrv_sz];
 	for(int i = 0; i < vec_sz ; i++)
 		arr[i] = value;
 }
@@ -78,16 +96,15 @@ template <typename T>
 vector<T>::vector(const vector &obj)
 {
 	cout << "Copy constructor " << endl;
-	capacity = obj.capacity;
-	length = obj.length;
+	rsrv_sz = obj.rsrv_sz;
 	vec_sz = obj.vec_sz;
 	
-	arr = new T[capacity];
+	arr = new T[rsrv_sz];
 	for(int i = 0 ; i < vec_sz ; i++)
 		arr[i] = obj.arr[i];
 }
 
-// Overloaded assignment operator : 
+//Overloaded assignment operator : 
 template <typename T>
 vector<T>& vector<T>::operator=(const vector& rhs)
 {
@@ -96,10 +113,10 @@ vector<T>& vector<T>::operator=(const vector& rhs)
 		cout << "self referencing doin nothng \n" ;
 		return *this;		
 	}
-	
-	if(capacity < rhs.vec_sz)
+	puts("Inside ...3 ");
+	if(rsrv_sz < rhs.vec_sz)
 	{
-		capacity = rhs.vec_sz << 1 ;
+		rsrv_sz = rhs.vec_sz << 1 ;
 		reallocate();
 	}
 	
@@ -114,9 +131,9 @@ template <typename T>
 void vector<T>::push_back(T element)
 {
 	
-	if(vec_sz == capacity )
+	if(vec_sz == rsrv_sz )
 	{
-		capacity <<= 1;
+		rsrv_sz <<= 1;
 		reallocate();
 	}
 	arr[vec_sz] = element;
@@ -124,7 +141,7 @@ void vector<T>::push_back(T element)
 }
 
 template <typename T>
-typename vector<T>::reference vector<T>::operator[](typename vector<T>::size_type index) const
+typename vector<T>::const_reference vector<T>::operator[](typename vector<T>::size_type index) const
 {
 	return arr[index];
 	
@@ -140,11 +157,59 @@ typename vector<T>::reference vector<T>::operator[](typename vector<T>::size_typ
 template <typename T>
 inline void vector<T>::reallocate()
 {
-	T *arrnew = new T[capacity];
+	T *arrnew = new T[rsrv_sz];
 	memcpy(arrnew,arr,vec_sz * sizeof(T));
 	
 	delete [] arr;
 	arr = arrnew;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::begin() const {
+	return arr;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::cbegin() const {
+	return arr;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::end() const {
+	return arr + vec_sz;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::iterator::operator++()
+{
+	current = current + 1;
+	return current;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::iterator::operator++(int)
+{
+	T* temp = current;
+	operator++();
+	return temp;
+}
+
+template <typename T>
+bool vector<T>::iterator::operator !=(const iterator rhs)
+{
+	return current != rhs.current;
+}
+
+template <typename T>
+bool vector<T>::iterator::operator ==(const iterator rhs)
+{
+	return current == rhs.current;
+}
+
+template <typename T>
+T vector<T>::iterator::operator*() const
+{
+	return *current;
 }
 
 #endif

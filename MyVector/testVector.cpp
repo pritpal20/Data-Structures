@@ -1,5 +1,6 @@
 #include <iostream>
 #include "my_vector.h"
+#include <utility>
 
 #include <time.h>
 
@@ -20,12 +21,12 @@ int main(int argc,char *argv[])
 	}
 	
 	int N = atoi(argv[1]);
-	vector<int> v1;
+	vector<int> v1(10,0);
 	
 	srand(time(NULL));
 	
-	cout << "size of vector v1 is " << v1.size() <<  endl;
-	cout << "capacity  of vector v1 is " << v1.Capacity() <<  endl;
+	cout << "v1 size = " << v1.size() <<  endl;
+	cout << "v1 capacity = " << v1.capacity() <<  endl;
 
 	for(int i = 0 ; i < N ; i++)
 	{
@@ -33,16 +34,16 @@ int main(int argc,char *argv[])
 		cout << "Inserting element " << i+1 <<" ... " << temp << endl;
 		v1.push_back(temp);
 	}
-	
-	for(int i = 0 ; i < v1.size() ; i++)
+	int i = 0;
+	for(auto &f: v1)
 	{
-		cout << "vector v1[" << i << "] = " << v1[i] << endl;
+		printf("v1[%d] = %d\n",i,f);
+		i++;
 	}
-	
-	v1 = v1;
+		
 	
 	cout << "size of vector v1 is " << v1.size() <<  endl;
-	cout << "capacity  of vector v1 is " << v1.Capacity() <<  endl;
+	cout << "capacity  of vector v1 is " << v1.capacity() <<  endl;
 
 	return 0;
 }
