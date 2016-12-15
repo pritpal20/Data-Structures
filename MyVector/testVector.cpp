@@ -1,6 +1,7 @@
 #include <iostream>
 #include "my_vector.h"
 #include <utility>
+#include <unistd.h>
 
 #include <time.h>
 
@@ -35,15 +36,23 @@ int main(int argc,char *argv[])
 		v1.push_back(temp);
 	}
 	int i = 0;
-	for(auto &f: v1)
+	for(auto f: v1)
 	{
 		printf("v1[%d] = %d\n",i,f);
 		i++;
 	}
 		
-	
 	cout << "size of vector v1 is " << v1.size() <<  endl;
 	cout << "capacity  of vector v1 is " << v1.capacity() <<  endl;
+	
+	puts("testing reverse iterator ...\n");
+	vector<int>::iterator it ;
+	
+	for( it = v1.rbegin(); it != v1.rend(); it++)
+	{
+		cout << "v1  = "  << *it << endl;
+		sleep(1);
+	}
 
 	return 0;
 }

@@ -42,6 +42,8 @@ class vector
 		T operator*() const;
 	};
 	
+	typedef const iterator const_iterator;
+	
 	vector();
 	explicit vector(size_type,const T&);
 	vector(const vector&);
@@ -57,8 +59,15 @@ class vector
 	
 	inline void reallocate();
 	
-	iterator begin() const;
-	iterator end() const;
+	iterator begin() ;
+	iterator end();
+	const_iterator cbegin() const;
+	const_iterator cend() const;
+	iterator rbegin();
+	iterator rend();
+	const_iterator rcbegin() const;
+	const_iterator rcend() const;
+	
 	iterator insert(iterator it,const T &value);
 	
 	private :
@@ -165,19 +174,45 @@ inline void vector<T>::reallocate()
 }
 
 template <typename T>
-typename vector<T>::iterator vector<T>::begin() const {
+typename vector<T>::iterator vector<T>::begin() {
 	return arr;
 }
 
 template <typename T>
-typename vector<T>::iterator vector<T>::cbegin() const {
-	return arr;
-}
-
-template <typename T>
-typename vector<T>::iterator vector<T>::end() const {
+typename vector<T>::iterator vector<T>::end() {
 	return arr + vec_sz;
 }
+
+template <typename T>
+typename vector<T>::const_iterator vector<T>::cbegin() const {
+	return arr;
+}
+
+template <typename T>
+typename vector<T>::const_iterator vector<T>::cend() const {
+	return arr + vec_sz;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::rend() {
+	return arr;
+}
+
+template <typename T>
+typename vector<T>::iterator vector<T>::rbegin()  {
+	return arr + vec_sz;
+}
+
+template <typename T>
+typename vector<T>::const_iterator vector<T>::rcend() const {
+	return arr;
+}
+
+template <typename T>
+typename vector<T>::const_iterator vector<T>::rcbegin() const{
+	return arr + vec_sz;
+}
+
 
 template <typename T>
 typename vector<T>::iterator vector<T>::iterator::operator++()
