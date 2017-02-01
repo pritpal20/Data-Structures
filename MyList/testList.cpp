@@ -45,28 +45,26 @@ int main()
 				break;
 			}
 			case 'd' :
-                        {	
+			{	
 				try
 				{
 					if(l1->GetLength() == 0 )      
-						 throw "divide by zero error ";
-                                	int pos = rand()%l1->GetLength();
-				//cin >> pos ;
+						throw "divide by zero error ";
+						int pos = rand()%l1->GetLength();
+
 					cout << "Deleting .. List List1[" << pos <<"] = "  << l1->Print(pos) <<  endl;	
-                               		l1->Remove(pos);
+					l1->Remove(pos);
 			 		l1->ListPrint();
 				}
 				catch(const char *error)
-                                {
-                                        cout << "Exception : " << error << endl;
-
-                                }
+				{
+					cout << "Exception : " << error << endl;
+				}
 				catch(...)
-                                {
-                                        cout << " caught exception : " << endl;
-
-                                }
-                        }
+				{
+					cout << " caught exception : " << endl;
+				}
+			}
 			break;
 			case 'p' : 
 				l1->Print();
